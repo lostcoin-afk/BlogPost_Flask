@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" integrity="sha384-Xbg45MqvDIk1e563NLpGEulpX6AvL404DP+/iCgW9eFa2BqztiwTexswJo2jLMue" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    {% if title %}
+        <title>Flask Blog - {{ title }}</title>
+    {% else %}
+        <title>Flask Blog</title>
+    {% endif %}
+
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Flask Blog</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <!-- Left-side nav items -->
+                        <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog">Blog</a>
+                        </li>
+                        </ul>
+
+                        <!-- Right-side login/register buttons -->
+                        <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn  me-2 px-3" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn me-2 px-3" href="/register">Register</a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>Our Sidebar</h3>
+                    <p>This is a sidebar section where you can add additional content
+                     <ul class="list-group">
+                        <li class="list-group">Latest Posts</li>
+                        <li class="list-group">Announcements</li>
+                        <li class="list-group">Calendars</li>
+                        <li class="list-group">etc</li>
+                     </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
