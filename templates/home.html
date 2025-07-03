@@ -1,17 +1,22 @@
 {% extends "base.html" %}
-<!-- {% block head %}
-    {% if title %}
-    <title>Flask Blog - {{ title }}</title>
-    {% else %}
-    <title>Flask Blog</title>
-    {% endif %}
-{% endblock head %} -->
 
-    {% block content %}
-    {% for post in posts %}
-        <h1>{{ post.title }}</h1>
-        <p>By {{ post.author }} on {{ post.date }}</p>
-        <p>{{ post.content }}</p>
-    {% endfor %}
-    <a href="/about">Go to About Page</a>
-    {% endblock content %}
+{% block content %}
+  {% for post in posts %}
+    <article class="blog-post card mb-4 shadow-sm border-0">
+      <div class="card-body">
+        <h2 class="card-title">
+          <a href="/post" class="text-decoration-none text-dark">
+            {{ post.title }}
+          </a>
+        </h2>
+        <p class="card-subtitle text-muted mb-2">
+          By <strong>{{ post.author }}</strong> on {{ post.date }}
+        </p>
+        <p class="card-text">
+          {{ post.content[:300] }}...
+        </p>
+        <a href="/post" class="btn btn-sm btn-outline-primary">Read More</a>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}
