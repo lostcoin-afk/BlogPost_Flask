@@ -18,6 +18,7 @@ def strong_password_check(form, field):
         raise ValidationError('Password must contain at least one special character.')
 
 class RegistrationForm(FlaskForm):
+    name= StringField('Name', validators=[DataRequired(), Length(min=2, max=100)])
     username = StringField('Username', validators=[DataRequired(),Length(min=2, max=30)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password',validators=[DataRequired()])

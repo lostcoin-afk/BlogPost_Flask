@@ -1,11 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for,flash
-from forms import RegistrationForm, LoginForm
-from flask_sqlalchemy import SQLAlchemy
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'hg67ih78evds7ubg57iubg'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-
+from flaskBlogs import app, db
+from flaskBlogs.forms import RegistrationForm, LoginForm
+from flask import render_template, redirect, url_for, flash, request
+from flaskBlogs.models import User, Post, Comment
 
 posts = [
     {
@@ -61,19 +57,13 @@ def register():
     form = RegistrationForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+
+            db.session.add(User(username=form.username.data, email=form.email.data, password=form.password.data))
+            db.session.commit()
+
             flash('Registration successful for: ' + form.username.data, category='success') 
             # Here you would typically save the user's information to the database
             # For now, we just redirect to the home page
             print("Registration successful for:", form.username.data)
             return redirect(url_for('login'))
     return render_template('register.html', title='Register Page', form=form, hide_sidebar=True)
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Implement after Database is ready@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# @app.route('/post/<int:post_id>')
-# def post(post_id):
-#     post = next((p for p in posts if p['id'] == post_id), None)
-#     return render_template('post.html', post=post)
-
-if( __name__ == '__main__'):
-    app.run(debug=True)
