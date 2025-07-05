@@ -1,23 +1,65 @@
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_login import LoginManager
+
+# app = Flask(__name__)
+
+# app.config['SECRET_KEY'] = 'hg67ih78evds7ubg57iubg'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# db = SQLAlchemy(app)
+
+# from flaskBlogs.models import User
+
+
+# login_manager = LoginManager(app)
+# login_manager.login_view = 'account'
+#   # Redirects to 'login' route if not logged in
+# login_manager.login_message_category = 'info'
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.query.get(int(user_id))
+
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-app = Flask(__name__)
+# Initialize extensions (not bound to app yet)
+db = SQLAlchemy()
+login_manager = LoginManager()
 
-app.config['SECRET_KEY'] = 'hg67ih78evds7ubg57iubg'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__)
 
-from flaskBlogs.models import User
+    # Configuration
+    app.config['SECRET_KEY'] = 'hg67ih78evds7ubg57iubg'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
+    # Initialize extensions with app
+    db.init_app(app)
+    login_manager.init_app(app)
 
-login_manager = LoginManager(app)
-login_manager.login_view = 'account'
-  # Redirects to 'login' route if not logged in
-login_manager.login_message_category = 'info'
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+    # Login settings
+    login_manager.login_view = 'auth.login'  # Redirect to 'auth.login' if not logged in
+    login_manager.login_message_category = 'info'
+
+    # Import models so they register with SQLAlchemy
+    from flaskBlogs.models import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    # Register Blueprints
+    from flaskBlogs.routes.auth_routes import auth_bp
+    from flaskBlogs.routes.user_routes import user_bp
+    from flaskBlogs.routes.post_routes import post_bp
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(user_bp)
+    app.register_blueprint(post_bp)
+
+    return app
 
 
 

@@ -104,6 +104,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    # RegistrationForm.validate_username(form.username.data)
     if request.method == 'POST':
         if form.validate_on_submit():
             hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')

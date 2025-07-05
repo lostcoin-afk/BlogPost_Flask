@@ -40,17 +40,17 @@
                         <ul class="navbar-nav">
                             {% if current_user.is_authenticated %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('account') }}">{{ current_user.username }}</a>
+                                    <a class="nav-link" href="{{ url_for('user.account') }}">{{ current_user.username }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                                 </li>
                             {% else %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                                    <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
                                 </li>
                             {% endif %}
 
