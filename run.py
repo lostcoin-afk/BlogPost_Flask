@@ -11,6 +11,8 @@ if( __name__ == '__main__'):
             db.create_all()
             print("Database Created Successfully.")
     app.run(debug=True)
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Implement after Database is ready@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # @app.route('/post/<int:post_id>')
 # def post(post_id):

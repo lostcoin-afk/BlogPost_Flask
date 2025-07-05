@@ -1,11 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'hg67ih78evds7ubg57iubg'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
+
+from flaskBlogs.models import User
+
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'account'
+  # Redirects to 'login' route if not logged in
+login_manager.login_message_category = 'info'
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
 
 ####@@@@@@@@@@@@@@@@@@@@@@________________-------->>>>  NOTES <<<<________________________@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####
 #

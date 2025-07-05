@@ -15,7 +15,7 @@
         <p class="card-text">
           {{ post.content[:300] }}...
         </p>
-        <a href="/post" class="btn btn-sm btn-outline-primary">Read More</a>
+        <a href="{{ url_for('post', post_id=post.id) }}" class="btn btn-sm btn-outline-primary">Read More</a>
       </div>
     </article>
   {% endfor %}

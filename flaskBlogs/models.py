@@ -1,7 +1,8 @@
 from flaskBlogs import db
 from datetime import datetime
+from flask_login import UserMixin
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'  # Explicitly set the table name
     id = db.Column(db.Integer,unique=True, primary_key=True)
     name= db.Column(db.String(100), nullable=False)
@@ -15,12 +16,13 @@ class User(db.Model):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-class Post(db.Model):
+class Post(db.Model, UserMixin):
     __tablename__ = 'posts'  # Explicitly set the table name
     id = db.Column(db.Integer, unique=True, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    is_public = db.Column(db.Boolean, default=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):

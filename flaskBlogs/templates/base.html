@@ -38,12 +38,22 @@
 
                         <!-- Right-side login/register buttons -->
                         <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link btn  me-2 px-3" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn me-2 px-3" href="/register">Register</a>
-                        </li>
+                            {% if current_user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('account') }}">{{ current_user.username }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                                </li>
+                            {% endif %}
+
                         </ul>
                     </div>
                     </div>
@@ -81,4 +91,5 @@
             {% endif %}
         </div>
     </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
